@@ -42,6 +42,12 @@ subdir('options')
 subdir('translationTable')
 subdir('gstring')
 subdir('frequencySyncSignal')
+subdir('utilities')
+subdir('materials')
+subdir('mirrors')
+subdir('parameters')
+subdir('sensitivity')
+#subdir('detector')
 
 
 # compilation loop
@@ -50,10 +56,7 @@ foreach L : LD
     this_lib_name = L['name'] # key name must be present
     sources = L.get('sources', [''])
     headers = L.get('headers', [''])
-    examples = L.get('examples', empty_dict)
-    geo_build = L.get('geo_build', empty_dict)
     this_deps = L.get('dependencies', [])
-    plugins = L.get('plugins', empty_dict)
     additional_includes = L.get('additional_includes', [''])
     moc_headers = L.get('moc_headers', [''])
     moc_sources = []
@@ -87,33 +90,6 @@ foreach L : LD
     # header files
     if not headers.contains('')
         install_headers(headers)
-    endif
-
-    #  plugins
-    #  explicitly tell the linker to prefer dynamic libz.so with link_args below
-    #    if host_machine.system() == 'darwin'
-    #        # macOS: Do not use -Bdynamic, it's not needed
-    #        zlib_link_args = ['-lz']
-    #    else
-    #        # Linux: Use -Bdynamic
-    #        zlib_link_args = ['-Wl,-Bdynamic', '-lz']
-    #    endif
-
-    if plugins != empty_dict
-        foreach name, sources : plugins
-            shared_library(
-                name,
-                sources[0],
-                install : sources[1],
-                dependencies : [this_deps, zlib_dep],
-                include_directories : all_includes + this_lib_name + additional_includes,
-                link_with : all_libs,
-                name_suffix : 'gplugin',
-                name_prefix : '',
-                override_options : ['b_staticpic=false']
-                # link_args : all_lib_names
-            )
-        endforeach
     endif
 
 
