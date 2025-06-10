@@ -12,7 +12,7 @@
 // gemc
 #include "gbank.h"
 #include "gemcOptions.h"
-#include "MPrimaryGeneratorAction.h"
+//#include "MPrimaryGeneratorAction.h"
 
 // mlibrary
 #include "frequencySyncSignal.h"
@@ -43,6 +43,12 @@
 
 // TODO: all these quantities should be references.
 
+
+class userInforForParticle
+{
+public:
+	vector<double> infos;
+};
 
 class hitOutput
 {
@@ -162,7 +168,7 @@ public:
 class fastMCForParticle
 {
 public:
-	fastMCForParticle(string detector)
+	fastMCForParticle([[maybe_unused]] string detector)
 	{
 		pOrig  = G4ThreeVector(0,0,0);
 		pSmear = G4ThreeVector(0,0,0);

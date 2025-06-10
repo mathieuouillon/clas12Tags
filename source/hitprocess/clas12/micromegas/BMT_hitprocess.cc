@@ -15,7 +15,7 @@
 using namespace ccdb;
 
 
-static bmtConstants initializeBMTConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static bmtConstants initializeBMTConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	bmtConstants bmtc;
@@ -185,7 +185,7 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 
 
 
-vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector)
 {
 	vector<identifier> yid = id;
 	class bmt_strip bmts;
@@ -300,7 +300,7 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, G4Step* a
 }
 
 
-map< string, vector <int> >  BMT_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  BMT_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	
@@ -324,7 +324,7 @@ vector<MHit*> BMT_HitProcess :: electronicNoise()
 }
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > BMT_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > BMT_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	
@@ -334,7 +334,7 @@ map< int, vector <double> > BMT_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double BMT_HitProcess :: voltage(double charge, double time, double forTime)
+double BMT_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return 0.0;
 }

@@ -18,11 +18,7 @@ using namespace UTIL;
 #include <fstream>
 
 
-class userInforForParticle
-{
-public:
-	vector<double> infos;
-};
+
 
 /// \class rerunEventParams
 /// <b> rerunEventParams </b>\n\n

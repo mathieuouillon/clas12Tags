@@ -17,7 +17,7 @@ using namespace ccdb;
 
 
 
-static ftCalConstants initializeFTCALConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static ftCalConstants initializeFTCALConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	ftCalConstants ftcc;
@@ -287,7 +287,7 @@ map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	return dgtz;
 }
 
-vector<identifier>  ft_cal_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier>  ft_cal_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector)
 {
 	id[id.size()-1].id_sharing = 1;
 	return id;
@@ -313,7 +313,7 @@ vector<MHit*> ft_cal_HitProcess :: electronicNoise()
 
 
 
-map< string, vector <int> >  ft_cal_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  ft_cal_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	
@@ -324,7 +324,7 @@ map< string, vector <int> >  ft_cal_HitProcess :: multiDgt(MHit* aHit, int hitn)
 
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > ft_cal_HitProcess :: chargeTime(MHit* aHit, int hitn) {
+map< int, vector <double> > ft_cal_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn) {
 	map< int, vector <double> > CT;
 	
 	vector<double> hitNumbers;
@@ -442,7 +442,7 @@ map< int, vector <double> > ft_cal_HitProcess :: chargeTime(MHit* aHit, int hitn
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double ft_cal_HitProcess :: voltage(double charge, double time, double forTime)
+double ft_cal_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return PulseShape(forTime, ftcc.vpar, charge, time);
 }

@@ -16,7 +16,7 @@ using namespace ccdb;
 #include "Randomize.hh"
 
 
-static dcConstants initializeDCConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static dcConstants initializeDCConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	dcConstants dcc;
@@ -401,7 +401,7 @@ map<string, double> dc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 }
 
 // routine to determine the wire number based on the hit position
-vector<identifier>  dc_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier>  dc_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector)
 {
 	vector<identifier> yid = id;
 	
@@ -487,7 +487,7 @@ double dc_HitProcess::doca(G4ThreeVector pos, int layer, int wire, double dlayer
     return sqrt(pow(pos.y()-wireline.y(),2.0)+pow(pos.z()-wireline.z(),2.0));
 }
  
-map< string, vector <int> >  dc_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  dc_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	
@@ -642,7 +642,7 @@ G4ThreeVector dc_HitProcess :: psmear(G4ThreeVector p)
 
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > dc_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > dc_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	
@@ -653,7 +653,7 @@ map< int, vector <double> > dc_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double dc_HitProcess :: voltage(double charge, double time, double forTime)
+double dc_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return DGauss(forTime, dcc.vpar, charge, time);
 }

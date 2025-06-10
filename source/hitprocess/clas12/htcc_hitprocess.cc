@@ -17,7 +17,7 @@ using namespace CLHEP;
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
 
-static htccConstants initializeHTCCConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static htccConstants initializeHTCCConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	htccConstants htccc;
@@ -343,7 +343,7 @@ vector<MHit*> htcc_HitProcess :: electronicNoise()
 }
 
 
-map< string, vector <int> >  htcc_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  htcc_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	return MH;
@@ -351,7 +351,7 @@ map< string, vector <int> >  htcc_HitProcess :: multiDgt(MHit* aHit, int hitn)
 
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > htcc_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > htcc_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	
@@ -502,7 +502,7 @@ map< int, vector <double> > htcc_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double htcc_HitProcess :: voltage(double charge, double time, double forTime)
+double htcc_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	// The shape of the "PulseShape" function is defined in the HitProcess.h
 	return PulseShape(forTime, htccc.vpar, charge, time);

@@ -2,7 +2,7 @@
 # Forcing suffix lib instead of variants like lib64
 project('clas12Tags', 'cpp',
         default_options : ['cpp_std=c++17', 'default_library=static', 'default_both_libraries=static', 'libdir=lib'],
-        version : run_command('git', 'describe', '--tags', '--abbrev=0', '--always', check : true).stdout().strip(),
+        version : 'dev',
         meson_version : '>= 1.6.0'
 )
 
@@ -51,6 +51,7 @@ subdir('sensitivity')
 subdir('physics')
 subdir('fields')
 subdir('hitprocess')
+subdir('output')
 
 
 # compilation loop
