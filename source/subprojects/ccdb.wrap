@@ -1,0 +1,8 @@
+[wrap-git]
+url = https://code.jlab.org/hallb/clas12/ccdb
+revision = 1.99.6
+depth = 1
+method = cmake
+
+[provide]
+ccdb=ccdb_dep

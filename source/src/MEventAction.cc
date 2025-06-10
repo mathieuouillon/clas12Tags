@@ -887,7 +887,7 @@ void MEventAction::EndOfEventAction(const G4Event* evt)
 						double voltage = 0;
 						
 						// create the voltage output based on the hit process
-						// routine voltage(double charge, double time, double forTime)
+						// routine voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 						for(unsigned s=0; s<stepTimes.size(); s++) {
 							
 							double stepTime   = stepTimes[s];

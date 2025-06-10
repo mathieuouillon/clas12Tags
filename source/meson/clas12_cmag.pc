@@ -1,0 +1,12 @@
+# - Relocatable pkgconfig file for clas12_cmag
+# copy this to <path_to_cmag)/lib/pkgconfig/
+prefix=${pcfiledir}/../..
+libdir=${prefix}/lib
+includedir=${prefix}/includes
+
+Name: clas12-cmag
+Description: CLAS12 Magnetic Fields
+Version: 1.1
+Libs: -L${libdir} -lcMag
+Cflags: -I${includedir}
+

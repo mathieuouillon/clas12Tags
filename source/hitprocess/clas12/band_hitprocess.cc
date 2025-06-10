@@ -18,7 +18,7 @@ using namespace ccdb;
 
 double BARLENGTHS[]  = {163.7,201.9,51.2,51.2,201.9};
 
-static bandHitConstants initializeBANDHitConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static bandHitConstants initializeBANDHitConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	bandHitConstants bhc;
@@ -351,7 +351,7 @@ map<string, double> band_HitProcess :: integrateDgt(MHit* aHit, int hitn)
 	return dgtz;
 }
 
-vector<identifier>  band_HitProcess :: processID(vector<identifier> id, G4Step* aStep, detector Detector)
+vector<identifier>  band_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector)
 {
 	vector<identifier> yid = id;
 	yid[0].id_sharing = 1; // sector (paddle number)
@@ -378,7 +378,7 @@ vector<identifier>  band_HitProcess :: processID(vector<identifier> id, G4Step* 
 	return yid;}
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > band_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > band_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	
 	// All hits within
@@ -468,7 +468,7 @@ map< int, vector <double> > band_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double band_HitProcess :: voltage(double charge, double time, double forTime)
+double band_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return PulseShape(forTime, bhc.vpar, charge, time);
 }
@@ -494,7 +494,7 @@ vector<MHit*> band_HitProcess :: electronicNoise()
 
 
 
-map< string, vector <int> >  band_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  band_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	

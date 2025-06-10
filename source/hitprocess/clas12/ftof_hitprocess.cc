@@ -14,7 +14,7 @@ using namespace ccdb;
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
-static ftofConstants initializeFTOFConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false) {
+static ftofConstants initializeFTOFConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false) {
 	ftofConstants ftc;
 	
 	// do not initialize at the beginning, only after the end of the first event,
@@ -443,7 +443,7 @@ map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
 
 
 
-vector<identifier> ftof_HitProcess::processID(vector<identifier> id, G4Step* aStep, detector Detector) {
+vector<identifier> ftof_HitProcess::processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector) {
 	
 	vector<identifier> yid = id;
 	yid[0].id_sharing = 1; // sector
@@ -486,7 +486,7 @@ vector<MHit*> ftof_HitProcess::electronicNoise() {
 	return noiseHits;
 }
 
-map< string, vector <int> > ftof_HitProcess::multiDgt(MHit* aHit, int hitn) {
+map< string, vector <int> > ftof_HitProcess::multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn) {
 	map< string, vector <int> > MH;
 	
 	return MH;
@@ -494,7 +494,7 @@ map< string, vector <int> > ftof_HitProcess::multiDgt(MHit* aHit, int hitn) {
 
 // - charge: returns charge/time digitized information / step
 
-map< int, vector <double> > ftof_HitProcess::chargeTime(MHit* aHit, int hitn) {
+map< int, vector <double> > ftof_HitProcess::chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn) {
 	map< int, vector <double> > CT;
 	
 	vector<double> hitNumbers;
@@ -650,7 +650,7 @@ map< int, vector <double> > ftof_HitProcess::chargeTime(MHit* aHit, int hitn) {
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
 
-double ftof_HitProcess::voltage(double charge, double time, double forTime) {
+double ftof_HitProcess::voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime) {
 	//	return 0.0;
 	return PulseShape(forTime, ftc.vpar, charge, time);
 }

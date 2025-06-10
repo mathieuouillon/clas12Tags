@@ -15,7 +15,7 @@ using namespace CLHEP;
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
 
-static cndConstants initializeCNDConstants(int runno, string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static cndConstants initializeCNDConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	cndConstants cndc;
@@ -659,7 +659,7 @@ double cnd_HitProcess::BirksAttenuation(double destep, double stepl, int charge,
 }
 
 
-map< string, vector <int> >  cnd_HitProcess :: multiDgt(MHit* aHit, int hitn)
+map< string, vector <int> >  cnd_HitProcess :: multiDgt([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< string, vector <int> > MH;
 	
@@ -667,7 +667,7 @@ map< string, vector <int> >  cnd_HitProcess :: multiDgt(MHit* aHit, int hitn)
 }
 
 // - charge: returns charge/time digitized information / step
-map< int, vector <double> > cnd_HitProcess :: chargeTime(MHit* aHit, int hitn)
+map< int, vector <double> > cnd_HitProcess :: chargeTime([[maybe_unused]] MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map< int, vector <double> >  CT;
 	
@@ -677,7 +677,7 @@ map< int, vector <double> > cnd_HitProcess :: chargeTime(MHit* aHit, int hitn)
 // - voltage: returns a voltage value for a given time. The inputs are:
 // charge value (coming from chargeAtElectronics)
 // time (coming from timeAtElectronics)
-double cnd_HitProcess :: voltage(double charge, double time, double forTime)
+double cnd_HitProcess :: voltage([[maybe_unused]] double charge, [[maybe_unused]] double time, [[maybe_unused]] double forTime)
 {
 	return 0.0;
 }

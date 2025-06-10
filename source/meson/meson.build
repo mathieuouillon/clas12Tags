@@ -34,6 +34,14 @@ clas12_cmag_deps = dependency('clas12_cmag',
                           version : '>=1.1',
 )
 
+ccdb_deps = dependency('ccdb',
+                              version : '>=1.99.6',
+)
+
+hipo_deps = dependency('hipo4',
+                       version : '>=4.2.0',
+)
+
 #  geant4.pc if not found
 fs = import('fs')
 gemc_prefix = get_option('prefix')
@@ -69,8 +77,9 @@ opt_var.append_compile_args('cpp',
 assimp_proj = cmake.subproject('assimp', options : opt_var)
 assimp_dep = assimp_proj.dependency('assimp')
 
-ccdb_proj = cmake.subproject('ccdb', options : opt_var)
-ccdb_dep = assimp_proj.dependency('ccdb')
+# wrap present but ccdb not working yet
+# ccdb_proj = cmake.subproject('ccdb', options : opt_var)
+# ccdb_dep = assimp_proj.dependency('ccdb')
 
 # sanitizer settings
 project_test_env = environment()

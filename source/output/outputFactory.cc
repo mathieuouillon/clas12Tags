@@ -53,7 +53,7 @@ outputContainer::outputContainer(goptions Opts)
 
 }
 
-void outputFactory::prepareEvent(outputContainer* output, map<string, double> *configuration){
+void outputFactory::prepareEvent([[maybe_unused]] outputContainer* output, [[maybe_unused]] map<string, double> *configuration){
 }
 
 
