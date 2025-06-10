@@ -3,12 +3,16 @@ LD += {
     'name' : sub_dir_name,
     'sources' : files(
         'sensitiveDetector.cc',
-        'identifier.cc',
+        'backgroundHits.cc',
+        'HitProcess.cc',
+        'sensitiveID.cc',
         'Hit.cc'
     ),
     'headers' : files(
         'sensitiveDetector.h',
-        'identifier.h',
+        'backgroundHits.h',
+        'HitProcess.h',
+        'sensitiveID.h',
         'Hit.h'
     ),
     'dependencies' : [qt6_deps, clhep_deps, geant4_deps],
