@@ -1,23 +1,5 @@
-from init_env import init_environment
 
-# adding ccdb as temporary dependency
-# will be removed once the hit process routines are plugins
-env = init_environment("qt5 geant4 clhep xercesc ccdb mlibrary cadmesh hipo c12bfields")
-env.Append(CXXFLAGS=['-std=c++20'])
-
-# addressing shortcoming of geant4-config 10.7.4 not returning all libraries
-additional_libs = []
-additional_libs.append('pthread')
-additional_libs.append('G4ptl')
-additional_libs.append('G4tasking')
 additional_libs.append('ccdb_sqlite')
-env.Append(LIBS  = additional_libs)
-
-# added because clhep is still behind clang (5/2015)
-if env['PLATFORM'] == 'darwin':
-	env.Append(CXXFLAGS='-Wno-absolute-value')
-
-
 
 
 # Hit Processes
@@ -117,13 +99,7 @@ gemc_sources = Split("""
 	src/MSteppingAction.cc""")
 
 env.Append(LIBPATH = ['lib'])
-env.Prepend(LIBS =   'gfields', 'ghitprocess', 'goutput', 'ggui'])
+env.Prepend(LIBS =    'ghitprocess', 'goutput', 'ggui'])
 env.Program(source = gemc_sources, target = "gemc")
 
 
-if env['LIBRARY'] == "static":
-	env.Library(source = gemc_sources, target = "gemc")
-
-
-if env['LIBRARY'] == "shared":
-	env.SharedLibrary(source = gemc_sources, target = "gemc")
