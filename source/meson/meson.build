@@ -24,6 +24,16 @@ clhep_deps = dependency('clhep',
                         version : '>=2.4.7.1',
 )
 
+# xercesc: pkg-config
+xercesc_deps = dependency('xerces-c',
+                        version : '>=3.2.5',
+)
+
+# clas12 cmag: pkg-config
+clas12_cmag_deps = dependency('clas12_cmag',
+                          version : '>=1.1',
+)
+
 #  geant4.pc if not found
 fs = import('fs')
 gemc_prefix = get_option('prefix')

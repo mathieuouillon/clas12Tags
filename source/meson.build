@@ -46,8 +46,10 @@ subdir('utilities')
 subdir('materials')
 subdir('mirrors')
 subdir('parameters')
+subdir('detector')
 subdir('sensitivity')
-#subdir('detector')
+subdir('physics')
+subdir('fields')
 
 
 # compilation loop
