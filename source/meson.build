@@ -50,6 +50,7 @@ subdir('detector')
 subdir('sensitivity')
 subdir('physics')
 subdir('fields')
+subdir('hitprocess')
 
 
 # compilation loop

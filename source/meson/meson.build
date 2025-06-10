@@ -69,6 +69,9 @@ opt_var.append_compile_args('cpp',
 assimp_proj = cmake.subproject('assimp', options : opt_var)
 assimp_dep = assimp_proj.dependency('assimp')
 
+ccdb_proj = cmake.subproject('ccdb', options : opt_var)
+ccdb_dep = assimp_proj.dependency('ccdb')
+
 # sanitizer settings
 project_test_env = environment()
 project_test_env.set(
