@@ -1,87 +1,3 @@
-from init_env import init_environment
-
-# adding ccdb as temporary dependency
-# will be removed once the hit process routines are plugins
-env = init_environment("qt5 geant4 clhep xercesc ccdb mlibrary cadmesh hipo c12bfields")
-env.Append(CXXFLAGS=['-std=c++17'])
-
-# addressing shortcoming of geant4-config 10.7.4 not returning all libraries
-additional_libs = []
-additional_libs.append('pthread')
-additional_libs.append('G4ptl')
-additional_libs.append('G4tasking')
-additional_libs.append('ccdb_sqlite')
-env.Append(LIBS  = additional_libs)
-
-# added because clhep is still behind clang (5/2015)
-if env['PLATFORM'] == 'darwin':
-	env.Append(CXXFLAGS='-Wno-absolute-value')
-
-
-
-
-# Hit Processes
-env.Append(CPPPATH = ['hitprocess', 'hitprocess/clas12', 'hitprocess/clas12/svt', 'hitprocess/clas12/micromegas', 'hitprocess/clas12/alert', 'hitprocess/clas12/recoil'])
-env.Append(CPPPATH = ['hitprocess/Aprime', 'hitprocess/GlueX', 'hitprocess/solid'])
-hitp_sources = Split("""
-	hitprocess/HitProcess_MapRegister.cc
-	hitprocess/flux_hitprocess.cc
-	hitprocess/mirror_hitprocess.cc
-	hitprocess/counter_hitprocess.cc
-	hitprocess/clas12/micromegas/Lorentz.cc
-	hitprocess/clas12/micromegas/FMT_hitprocess.cc
-	hitprocess/clas12/micromegas/fmt_strip.cc
-	hitprocess/clas12/micromegas/BMT_hitprocess.cc
-	hitprocess/clas12/micromegas/bmt_strip.cc
-	hitprocess/clas12/micromegas/ftm_hitprocess.cc
-	hitprocess/clas12/micromegas/ftm_strip.cc
-	hitprocess/clas12/rtpc_hitprocess.cc
-	hitprocess/clas12/svt/bst_hitprocess.cc
-	hitprocess/clas12/svt/bst_strip.cc
-	hitprocess/clas12/alert/atof_hitprocess.cc
-	hitprocess/clas12/alert/ahdc_hitprocess.cc
-	hitprocess/clas12/alert/alertshell_hitprocess.cc
-	hitprocess/clas12/ctof_hitprocess.cc
-	hitprocess/clas12/cnd_hitprocess.cc
-	hitprocess/clas12/dc_hitprocess.cc
-	hitprocess/clas12/ecal_hitprocess.cc
-	hitprocess/clas12/ftof_hitprocess.cc
-	hitprocess/clas12/ft_cal_hitprocess.cc
-	hitprocess/clas12/ft_hodo_hitprocess.cc
-	hitprocess/clas12/htcc_hitprocess.cc
-	hitprocess/clas12/ltcc_hitprocess.cc
-	hitprocess/clas12/rich_hitprocess.cc
-	hitprocess/clas12/band_hitprocess.cc
- 	hitprocess/clas12/uRwell/uRwell_hitprocess.cc
- 	hitprocess/clas12/uRwell/uRwell_strip.cc
-        hitprocess/clas12/recoil/recoil_hitprocess.cc	
-        hitprocess/clas12/recoil/recoil_strip.cc
-	hitprocess/bdx/cormo_hitprocess.cc
-	hitprocess/bdx/veto_hitprocess.cc
-	hitprocess/bdx/crs_hitprocess.cc
-	hitprocess/eic/eic_compton_hitprocess.cc
-	hitprocess/eic/eic_dirc_hitprocess.cc
-	hitprocess/eic/eic_ec_hitprocess.cc
-	hitprocess/eic/eic_preshower_hitprocess.cc
-	hitprocess/eic/eic_rich_hitprocess.cc
-	hitprocess/injector/bubble_hitprocess.cc
-	hitprocess/HPS/ECAL_hitprocess.cc
-	hitprocess/HPS/SVT_hitprocess.cc
-	hitprocess/HPS/muon_hodo_hitprocess.cc""")
-env.Library(source = hitp_sources, target = "lib/ghitprocess")
-
-
-# Output
-env.Append(CPPPATH = 'output')
-output_sources = Split("""
-	output/outputFactory.cc
-	
-	output/hipo_output.cc
-	output/hipoSchemas.cc
-	output/txt_output.cc
-	output/txt_simple_output.cc
-	output/gbank.cc""")
-env.Library(source = output_sources, target = "lib/goutput")
 
 # GUI
 env.Append(CPPPATH = 'gui/src')
@@ -117,13 +33,7 @@ gemc_sources = Split("""
 	src/MSteppingAction.cc""")
 
 env.Append(LIBPATH = ['lib'])
-env.Prepend(LIBS =   'gfields', 'ghitprocess', 'goutput', 'ggui'])
+env.Prepend(LIBS =    'ghitprocess', 'goutput', 'ggui'])
 env.Program(source = gemc_sources, target = "gemc")
 
 
-if env['LIBRARY'] == "static":
-	env.Library(source = gemc_sources, target = "gemc")
-
-
-if env['LIBRARY'] == "shared":
-	env.SharedLibrary(source = gemc_sources, target = "gemc")
