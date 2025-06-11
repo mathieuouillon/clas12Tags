@@ -52,6 +52,7 @@ subdir('physics')
 subdir('fields')
 subdir('hitprocess')
 subdir('output')
+#subdir('gui')
 
 
 # compilation loop
