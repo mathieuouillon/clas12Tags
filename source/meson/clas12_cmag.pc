@@ -1,6 +1,5 @@
 # - Relocatable pkgconfig file for clas12_cmag
-# copy this to <path_to_cmag)/lib/pkgconfig/
-prefix=${pcfiledir}/../..
+prefix=${pcfiledir}/../../../../clas12_cmag/1.1
 libdir=${prefix}/lib
 includedir=${prefix}/includes
 

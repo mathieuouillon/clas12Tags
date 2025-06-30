@@ -1,12 +1,11 @@
-# - Relocatable pkgconfig file for clas12_cmag
-# copy this to <path_to_cmag)/lib/pkgconfig/
-prefix=${pcfiledir}/../..
+# - Relocatable pkgconfig file for hipo
+prefix=${pcfiledir}/../../../../hipo/4.2.0
 libdir=${prefix}/lib
-includedir=${prefix}/includes
+includedir=${prefix}/include
 
-Name: clas12-cmag
+Name: hipo
 Description: CLAS12 Magnetic Fields
-Version: 1.1
-Libs: -L${libdir} -lcMag
+Version: 4.2.0
+Libs: -L${libdir} -lhipo4
 Cflags: -I${includedir}
 
