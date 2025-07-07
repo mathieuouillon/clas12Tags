@@ -96,11 +96,11 @@ if __name__ == "__main__":
                            root_lbs=["RIO", "Tree", "Core", "root"])
 
     # TEMP until hipo subproject is fixed: manually copy hipo.pc
-    hipopc_source = Path('meson/hipo.pc')
+    hipopc_source = Path('hipo.pc')
     hipopc_destination = install_dir / "lib" / "pkgconfig" / "hipo.pc"
     shutil.copy2(hipopc_source, hipopc_destination)
     print(f"Generated {hipopc_destination}")
-    cmag_source = Path('meson/clas12_cmag.pc')
+    cmag_source = Path('clas12_cmag.pc')
     cmag_destination = install_dir / "lib" / "pkgconfig" / "clas12_cmag.pc"
     shutil.copy2(cmag_source, cmag_destination)
     print(f"Generated {cmag_destination}")
