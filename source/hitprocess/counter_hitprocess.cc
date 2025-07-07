@@ -1,7 +1,7 @@
 // gemc headers
 #include "counter_hitprocess.h"
 
-map<string, double> counter_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> counter_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();

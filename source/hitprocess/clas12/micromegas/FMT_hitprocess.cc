@@ -20,7 +20,7 @@ using namespace CLHEP;
 using namespace ccdb;
 
 //static fmtConstants initializeFMTConstants(int runno)
-static fmtConstants initializeFMTConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static fmtConstants initializeFMTConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	fmtConstants fmtc;
@@ -88,7 +88,7 @@ static fmtConstants initializeFMTConstants([[maybe_unused]] int runno, [[maybe_u
 	return fmtc;
 }
 
-map<string, double>FMT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double>FMT_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();

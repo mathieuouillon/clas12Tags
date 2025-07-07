@@ -3,7 +3,7 @@
 // %%%%%%%%%%%%
 #include "SVT_hitprocess.h"
 
-map<string, double> SVT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> SVT_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;

@@ -14,7 +14,7 @@ using namespace ccdb;
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
-static ftofConstants initializeFTOFConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false) {
+static ftofConstants initializeFTOFConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false) {
 	ftofConstants ftc;
 	
 	// do not initialize at the beginning, only after the end of the first event,
@@ -237,7 +237,7 @@ static ftofConstants initializeFTOFConstants([[maybe_unused]] int runno, [[maybe
 
 
 
-map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, int hitn) {
+map<string, double> ftof_HitProcess::integrateDgt(MHit* aHit, [[maybe_unused]] int hitn) {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();
 	rejectHitConditions = false;

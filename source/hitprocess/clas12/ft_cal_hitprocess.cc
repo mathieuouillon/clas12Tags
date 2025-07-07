@@ -17,7 +17,7 @@ using namespace ccdb;
 
 
 
-static ftCalConstants initializeFTCALConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static ftCalConstants initializeFTCALConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	ftCalConstants ftcc;
@@ -149,7 +149,7 @@ static ftCalConstants initializeFTCALConstants([[maybe_unused]] int runno, [[may
 	return ftcc;
 }
 
-map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> ft_cal_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();

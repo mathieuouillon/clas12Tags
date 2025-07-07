@@ -1,7 +1,7 @@
 // gemc headers
 #include "mirror_hitprocess.h"
 
-map<string, double> mirror_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> mirror_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();

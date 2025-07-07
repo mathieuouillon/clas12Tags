@@ -15,7 +15,7 @@ using namespace CLHEP;
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
 
-static bstConstants initializeBSTConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static bstConstants initializeBSTConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	bstConstants bstc;
@@ -26,7 +26,7 @@ static bstConstants initializeBSTConstants([[maybe_unused]] int runno, [[maybe_u
 	return bstc;
 }
 
-map<string, double> bst_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> bst_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();

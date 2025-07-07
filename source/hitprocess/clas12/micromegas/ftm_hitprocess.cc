@@ -5,7 +5,7 @@
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
-static ftmConstants initializeFTMConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static ftmConstants initializeFTMConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	ftmConstants ftmc;
 	
@@ -27,7 +27,7 @@ static ftmConstants initializeFTMConstants([[maybe_unused]] int runno, [[maybe_u
 
 
 
-map<string, double> ftm_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> ftm_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;

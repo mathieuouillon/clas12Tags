@@ -10,7 +10,7 @@ using namespace ccdb;
 // gemc headers
 #include "ecal_hitprocess.h"
 
-static ecConstants initializeECConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static ecConstants initializeECConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	ecConstants ecc;
 	
@@ -267,7 +267,7 @@ static ecConstants initializeECConstants([[maybe_unused]] int runno, [[maybe_unu
 }
 
 // Process the ID and hit for the EC using EC scintillator slab geometry instead of individual strips.
-map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> ecal_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();

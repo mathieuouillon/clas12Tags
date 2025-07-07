@@ -18,7 +18,7 @@ using namespace CLHEP;
 #include "rich_hitprocess.h"
 
 static richConstants
-initializeRICHConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false) {
+initializeRICHConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false) {
   // TODO: with TDC simulation class from Marco M., time calibration information maybe not necessary
   richConstants richc;
   if (runno == -1) return richc;
@@ -46,7 +46,7 @@ initializeRICHConstants([[maybe_unused]] int runno, [[maybe_unused]] string digi
 // digitized info integrated over hit
 // changed to match data.json definition of RICH::tdc 
 
-map<string, double> rich_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> rich_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {        
 	map<string, double> dgtz;
 

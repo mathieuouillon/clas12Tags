@@ -42,7 +42,7 @@ static ahdcConstants initializeAHDCConstants(int runno, string digiVariation = "
 
 
 // this methos is for implementation of digitized outputs and the first one that needs to be implemented.
-map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, int hitn) {
+map<string, double> ahdc_HitProcess::integrateDgt(MHit* aHit, [[maybe_unused]] int hitn) {
 	
 	// digitized output
 	map<string, double> dgtz;

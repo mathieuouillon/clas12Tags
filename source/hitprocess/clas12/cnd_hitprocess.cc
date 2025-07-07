@@ -15,7 +15,7 @@ using namespace CLHEP;
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
 
-static cndConstants initializeCNDConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static cndConstants initializeCNDConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	cndConstants cndc;
@@ -137,7 +137,7 @@ static cndConstants initializeCNDConstants([[maybe_unused]] int runno, [[maybe_u
 	return cndc;
 }
 
-map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> cnd_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	
 	map<string, double> dgtz;

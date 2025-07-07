@@ -1,7 +1,7 @@
 // gemc headers
 #include "CVRT_hitprocess.h"
 
-map<string, double> CVRT_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> CVRT_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;

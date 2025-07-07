@@ -9,7 +9,7 @@
 #include "CLHEP/Units/PhysicalConstants.h"
 using namespace CLHEP;
 
-map<string, double> ECAL_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> ECAL_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	if(aHit->isBackgroundHit == 1) return dgtz;

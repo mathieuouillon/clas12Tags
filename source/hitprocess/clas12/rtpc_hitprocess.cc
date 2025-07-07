@@ -18,7 +18,7 @@ using namespace ccdb;
 #include "rtpc_hitprocess.h"
 
 // 2023.10.03 copied from rich_hitprocess.cc. Added in case for the future needed. (y.-c.)
-static rtpcConstants initializeRTPCConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static rtpcConstants initializeRTPCConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	rtpcConstants rtpcc;
@@ -90,7 +90,7 @@ static rtpcConstants initializeRTPCConstants([[maybe_unused]] int runno, [[maybe
 
 
 
-map<string, double> rtpc_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> rtpc_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 
 	rejectHitConditions = false;

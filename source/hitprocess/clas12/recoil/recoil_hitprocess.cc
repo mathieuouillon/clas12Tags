@@ -20,7 +20,7 @@ using namespace CLHEP;
 #include <CCDB/CalibrationGenerator.h>
 using namespace ccdb;
 
-static recoilConstants initializerecoilConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", string digiSnapshotTime = "no", bool accountForHardwareStatus = false)
+static recoilConstants initializerecoilConstants([[maybe_unused]] int runno, [[maybe_unused]] string digiVariation = "default", [[maybe_unused]] string digiSnapshotTime = "no", [[maybe_unused]] bool accountForHardwareStatus = false)
 {
 	// all these constants should be read from CCDB
 	recoilConstants recoilC;
@@ -90,7 +90,7 @@ static recoilConstants initializerecoilConstants([[maybe_unused]] int runno, [[m
 	return recoilC;
 }
 
-map<string, double>recoil_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double>recoil_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();

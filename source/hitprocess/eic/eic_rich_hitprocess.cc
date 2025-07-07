@@ -12,7 +12,7 @@ using namespace ccdb;
 // gemc headers
 #include "eic_rich_hitprocess.h"
 
-map<string, double> eic_rich_HitProcess :: integrateDgt(MHit* aHit, int hitn)
+map<string, double> eic_rich_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]] int hitn)
 {
 	map<string, double> dgtz;
 	vector<identifier> identity = aHit->GetId();
