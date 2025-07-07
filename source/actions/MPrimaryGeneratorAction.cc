@@ -18,7 +18,6 @@
 using namespace gstring;
 
 // C++ headers
-#include <sys/types.h>
 #include <dirent.h>
 #include <iostream>
 

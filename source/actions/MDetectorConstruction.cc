@@ -17,7 +17,25 @@
 #include "G4LogicalSkinSurface.hh"
 #include "G4LogicalBorderSurface.hh"
 
-// cadmesh
+// ───────────────── CADMesh single‑header library ────────────────
+// https://github.com/christopherpoole/CADMesh
+//
+// *Modifications applied to the vendor header:*
+//   - Marked the following classes `final`
+//       • BuiltInReader
+//       • TessellatedMesh
+//   - Reason: https://devblogs.microsoft.com/oldnewthing/20200619-00/?p=103877
+//
+// *Optional Dependencies*
+//   Define `USE_CADMESH_ASSIMP_READER` **before** including `CADMesh.hh`
+//   to enable Assimp‑based file loading.
+//
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!! SET THIS BEFORE INCLUDING CADMESH.HH TO USE THE ASSIMP READER
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#define USE_CADMESH_ASSIMP_READER
+// If you want Assimp to be the default reader, uncomment:
+// #define CADMESH_DEFAULT_READER ASSIMP
 #include "CADMesh.hh"
 
 // gemc headers
@@ -272,12 +290,15 @@ void MDetectorConstruction::buildCADDetector(string dname, string filename, int 
     // filename has been already verified to exist?
     if (VERB > 1) { cout << "  > Parsing CAD volume from " << filename << endl; }
 
-    CADMesh *mesh = new CADMesh((char *) filename.c_str());
-    mesh->SetScale(mm);
+	auto mesh = CADMesh::TessellatedMesh::From(filename,
+										   CADMesh::File::ASSIMP());
+
+    //CADMesh *mesh = new CADMesh((char *) filename.c_str());
+    mesh->SetScale(CLHEP::mm);
     mesh->SetReverse(false);
 
     // solid
-    G4VSolid *cad_solid = mesh->TessellatedMesh();
+    G4VSolid *cad_solid = mesh->GetSolid();
 
     // material
     string materialName = trimSpacesFromString((*hallMap)[dname].material);
