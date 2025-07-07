@@ -53,7 +53,7 @@ subdir('fields')
 subdir('hitprocess')
 subdir('output')
 subdir('actions')
-#subdir('gui')
+subdir('gui')
 
 
 # compilation loop

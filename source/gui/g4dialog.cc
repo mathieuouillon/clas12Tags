@@ -6,6 +6,7 @@
 
 // G4 headers
 #include "G4UIcommandTree.hh"
+#include "G4String.hh"
 
 g4dialog::g4dialog(QWidget *parent, goptions *Opts) : QWidget(parent)
 {

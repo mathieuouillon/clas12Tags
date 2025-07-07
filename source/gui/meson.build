@@ -17,21 +17,23 @@ LD += {
         'gtrigger.cc',
         'graph.cc'
     ),
-    'headers' : files(
-        'gemc_MainGui.h',
-        'detector_editor.h',
-        'runControl/run_control.h',
-        'runControl/primaryTab.h',
-        'runControl/momControls.h',
-        'runControl/vtxControls.h',
-        'camera_control.h',
-        'detector_tree.h',
-        'infos.h',
-        'g4dialog.h',
-        'gsignal.h',
-        'physicsListGui.h',
-        'gtrigger.h',
-        'graph.h'
+
+    'moc_headers' :  files(
+    'gemc_MainGui.h',
+    'detector_editor.h',
+    'runControl/run_control.h',
+    'runControl/primaryTab.h',
+    'runControl/momControls.h',
+    'runControl/vtxControls.h',
+    'camera_control.h',
+    'detector_tree.h',
+    'infos.h',
+    'g4dialog.h',
+    'gsignal.h',
+    'physicsListGui.h',
+    'gtrigger.h',
+    'graph.h'
     ),
-    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps],
+
+    'dependencies' : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, hipo_deps, ccdb_deps, clas12_cmag_deps, assimp_dep],
 }
