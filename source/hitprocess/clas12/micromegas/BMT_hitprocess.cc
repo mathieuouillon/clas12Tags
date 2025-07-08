@@ -94,9 +94,7 @@ static bmtConstants initializeBMTConstants([[maybe_unused]] int runno, [[maybe_u
 	bmtc.hStrip2Det = bmtc.hDrift/2.;
 	bmtc.nb_sigma=4;
 	//bmtc.changeFieldScale(-1);  // this needs to be read from DB
-	
-	bmtc.Lor_Angle.Initialize(runno);
-	
+
 	// get hit time distribution parameters
     snprintf(bmtc.database, sizeof(bmtc.database), "/calibration/mvt/bmt_time:%d:%s%s", bmtc.runNo, digiVariation.c_str(), timestamp.c_str());
 	data.clear(); calib->GetCalib(data,bmtc.database);
@@ -187,6 +185,12 @@ map<string, double>  BMT_HitProcess :: integrateDgt(MHit* aHit, [[maybe_unused]]
 
 vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, [[maybe_unused]] G4Step* aStep, [[maybe_unused]] detector Detector)
 {
+
+	if (!bmtc.Lor_Angle)
+		bmtc.Lor_Angle = std::make_unique<Lorentz>();
+
+	bmtc.Lor_Angle->Initialize(bmtc.runNo);
+
 	vector<identifier> yid = id;
 	class bmt_strip bmts;
 	
@@ -215,13 +219,13 @@ vector<identifier>  BMT_HitProcess :: processID(vector<identifier> id, [[maybe_u
 		G4ThreeVector BField(fieldValue[0],fieldValue[1],fieldValue[2]);
 		G4ThreeVector qEField(cos(phi_p),sin(phi_p),0); //Product qE
 		G4ThreeVector Fdir=qEField.cross(BField); //Direction of lorentz drift
-		bmtc.ThetaL=bmtc.Lor_Angle.GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+		bmtc.ThetaL=bmtc.Lor_Angle->GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 		bmtc.Theta_Ls_Z=Fdir.angle(dm_Z);
 		bmtc.Theta_Ls_C=dm_C.angle(Fdir);
 		
 		if(bmtc.runNo == 0){
 			cout << " > BMT: Field found with value " << fieldValue[2]/gauss << " gauss. Setting Lorentz angle accordingly." << endl;
-			bmtc.ThetaL=bmtc.Lor_Angle.GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
+			bmtc.ThetaL=bmtc.Lor_Angle->GetAngle(bmtc.HV_DRIFT[layer-1][sector-1]/bmtc.hDrift*10,BField.perp(qEField)/gauss/1000.)*degree;
 			bmtc.Theta_Ls_Z=Fdir.angle(dm_Z);
 			bmtc.Theta_Ls_C=dm_C.angle(Fdir);
 		}
@@ -354,7 +358,34 @@ void BMT_HitProcess::initWithRunNumber(int runno)
 
 
 // this static function will be loaded first thing by the executable
-bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
+// bmtConstants BMT_HitProcess::bmtc = initializeBMTConstants(1);
+
+
+
+/**
+ * @brief Provides a lazily-initialized singleton instance of FMT constants.
+ *
+ * This function ensures that the `fmtConstants` object is initialized only once
+ * at first access, avoiding static initialization order issues.
+ * The initialization uses a default run number (1) to load configuration data.
+ *
+ * @return Reference to the singleton instance of `fmtConstants`.
+ */
+bmtConstants& getBMTConstants() {
+	static bmtConstants bmtc = initializeBMTConstants(1);
+	return bmtc;
+}
+
+/**
+ * @brief Static instance of FMT constants used by FMT_HitProcess.
+ *
+ * This reference is initialized via `getFMTConstants()` to ensure safe,
+ * runtime-controlled construction of the constants, avoiding crashes
+ * during dynamic initialization.
+ */
+bmtConstants& BMT_HitProcess::bmtc = getBMTConstants();
+
+
 
 
 

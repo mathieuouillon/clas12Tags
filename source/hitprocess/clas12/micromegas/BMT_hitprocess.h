@@ -73,7 +73,7 @@ public:
 private:
 	
 	// constants initialized with initWithRunNumber
-	static bmtConstants bmtc;
+	static bmtConstants& bmtc;
 	
 	double fieldScale;
 	

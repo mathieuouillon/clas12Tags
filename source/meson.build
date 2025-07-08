@@ -109,16 +109,18 @@ foreach L : LD
     endif
 endforeach
 
+gemc = executable(
+    'gemc',
+    ['gemc.cc'],
+    install : true,
+    dependencies : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, ogl_deps, hipo_deps, ccdb_deps, clas12_cmag_deps, assimp_dep],
+    include_directories : all_includes,
+    link_with : all_libs,
+    link_args : all_lib_names,
+    override_options : ['b_pie=true']
+)
 
-# TODO: MOVE THE API GEMC TESTS HERE
-#gemc = executable(
-#    'gemc',
-#    ['gemc.cc'] + qrc_gemc_sources + qrc_compiled_sources,
-#    install : true,
-#    dependencies : [yaml_cpp_dep, qt6_deps, clhep_deps, geant4_deps, ogl_deps, sqlite_dep, expat_dep, assimp_dep],
-#    include_directories : all_includes,
-#    link_with : all_libs,
-#    link_args : all_lib_names,
-#    override_options : ['b_pie=true']
-#)
+install_subdir('../api', install_dir: get_option('prefix'))
+install_subdir('../experiments', install_dir: get_option('prefix'))
+install_data(['../clas12.sqlite'],  install_dir: join_paths(get_option('prefix'), 'experiments', 'clas12'))
 

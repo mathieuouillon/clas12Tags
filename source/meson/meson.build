@@ -1,8 +1,15 @@
 # qt: pkg-config. https://mesonbuild.com/Qt5-module.html
 qt6 = import('qt6')
 qt6_deps = dependency('qt6',
-                      modules : ['Core', 'Gui', 'Widgets', 'Xml', 'Sql', 'OpenGL'],
-                      include_type : 'system')
+                      modules : [
+                          'Core',
+                          'Gui',
+                          'Widgets',
+                          'OpenGL',
+                          'OpenGLWidgets',
+                          'Xml',
+                          'Sql'
+                      ], include_type : 'system')
 
 # check system: pkg-config --cflags --libs gl
 ogl_deps = dependency('opengl', required : true)
