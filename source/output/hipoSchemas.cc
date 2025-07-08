@@ -262,21 +262,36 @@ bool HipoSchema::non_registered_detectors(string schemaName, int type) {
 
 
 void outputContainer::initializeHipo(bool openFile) {
+	if (!openFile) {
+		hipoSchema = new HipoSchema();
 
-    if (!openFile) {
-        hipoSchema = new HipoSchema();
+		cout << " Initializing hipoSchema" << endl;
+		hipoWriter = new hipo::writer();
 
-        cout << " Initializing hipoSchema" << endl;
-        hipoWriter = new hipo::writer();
+		if (hipoSchema && hipoWriter) {
+			for (auto& [name, schema] : hipoSchema->schemasToLoad) {
+				std::cout << " Adding schema: " << name << std::endl;
+				hipoWriter->getDictionary().addSchema(schema);
+			}
+		}
+	} else {
+		if (!hipoWriter) {
+			std::cerr << "Error: hipoWriter is null. Did you forget to call initializeHipo(false)?" << std::endl;
+			std::exit(EXIT_FAILURE);
+		}
 
-        // Open a writer and register schemas with the writer.
-        // The schemas have to be added to the writer before openning
-        // the file, since they are written into the header of the file.
-        for (auto &schema: hipoSchema->schemasToLoad) {
-            hipoWriter->getDictionary().addSchema(schema.second);
-            // hipoWriter->addUserConfig("gemc","{\"version\": \"4.4.2\", \"beam\": \"e-,10.6 GeV\"}");
-        }
-    } else {
-        hipoWriter->open(outFile.c_str());
-    }
+		auto& dict = hipoWriter->getDictionary();
+		auto schemaList = dict.getSchemaList();
+		std::cout << "📋 Dictionary contains " << schemaList.size() << " schemas\n";
+
+		// Optionally log schemas without calling open()
+		for (const auto& name : schemaList) {
+			auto& s = dict.getSchema(name.c_str());
+			std::cout << "✅ Verifying schema " << name
+					  << ": entries = " << s.getEntries()
+					  << ", row length = " << s.getRowLength() << "\n";
+		}
+
+		hipoWriter->open(outFile.c_str());
+	}
 }
