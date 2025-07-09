@@ -14,10 +14,11 @@ add_project_arguments(
 )
 
 # additional debug options useful for profiling
+# TODO: use -O2 with new option to profile using cachegrind
 if get_option('buildtype') == 'debug'
     add_project_arguments('-fno-omit-frame-pointer', language : 'cpp')
     add_project_arguments('-fno-optimize-sibling-calls', language : 'cpp')
-    add_project_arguments('-O2', language : 'cpp')
+    # add_project_arguments('-O2', language : 'cpp')
 endif
 
 project_description = 'GEMC (GEant Monte-Carlo) is a program based on Geant4 to simulate the passage of particles through matter. '
@@ -113,7 +114,7 @@ gemc = executable(
     'gemc',
     ['gemc.cc'],
     install : true,
-    dependencies : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, ogl_deps, hipo_deps, ccdb_deps, clas12_cmag_deps, assimp_dep],
+    dependencies : [qt6_deps, clhep_deps, geant4_deps, xercesc_deps, ogl_deps, hipo_deps, ccdb_deps, clas12_cmag_deps, assimp_dep, lz4_dep],
     include_directories : all_includes,
     link_with : all_libs,
     link_args : all_lib_names,

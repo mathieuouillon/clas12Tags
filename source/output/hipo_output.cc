@@ -86,7 +86,14 @@ void hipo_output::recordSimConditions(outputContainer* output, map<string, strin
 	// file need to be opened after user configuration is added
 	// output->hipoWriter->addUserConfig("GEMC::config",  bigData);
 
+	// outEvent is nullptr at this point, so we need to instantiate it
+	outEvent = new hipo::event(1024 * 1024 * 2);
 	output->initializeHipo(true);
+
+	// if (!output->fileOpened) {
+	// 	output->hipoWriter->open(output->outFile.c_str());
+	// 	output->fileOpened = true;
+	// }
 }
 
 // returns detectorID from map, given hitType
@@ -109,21 +116,19 @@ string hipo_output::getHipoVariableName([[maybe_unused]] string trueInfoVar) {
 // write run::config bank
 void hipo_output::writeHeader([[maybe_unused]] outputContainer*    output,
                               [[maybe_unused]] map<string, double> data, [[maybe_unused]] gBank bank) {
+
+
+	if (outEvent == nullptr) {
+		outEvent = new hipo::event(1024 * 1024 * 2);
+		//output->initializeHipo(true);
+	}
+
+
 	int verbosity = int(output->gemcOpt.optMap["BANK_VERBOSITY"].arg);
 
 	//	for(auto &fieldScale: fieldScales) {
 	//		cout << ">" << fieldScale.first << "<" << " scaled by: " << fieldScale.second << endl;
 	//	}
-
-	// this will never enter the second condition because hipo_output is instantiated every event
-	if (outEvent == nullptr) {
-		outEvent = new hipo::event(1024 * 1024 * 2);
-		//	cout << " Event Size before reset: " << outEvent->getSize() << endl;
-	}
-	else {
-		outEvent->reset();
-		//	cout << " Event Size after reset: " << outEvent->getSize() << endl;
-	}
 
 	// Create runConfigBank with 1 row based on schema
 	// second argument is number of hits
@@ -157,7 +162,6 @@ void hipo_output::writeHeader([[maybe_unused]] outputContainer*    output,
 	if (verbosity > 2) { runConfigBank.show(); }
 
 	outEvent->addStructure(runConfigBank);
-
 
 	// RASTER constant initialization
 	if (rasterInitialized == -99) {
@@ -791,11 +795,19 @@ void hipo_output::writeFADCMode1([[maybe_unused]] outputContainer*  output,
 // write fadc mode 7 (integrated mode) - jlab hybrid banks. This uses the translation table to write the crate/slot/channel
 void hipo_output::writeFADCMode7([[maybe_unused]] outputContainer*  output,
                                  [[maybe_unused]] vector<hitOutput> HO,
-                                 [[maybe_unused]] int ev_number) {
+                                 [[maybe_unused]] int               ev_number) {
 }
 
 void hipo_output::writeEvent(outputContainer* output) {
-	outEvent->addStructure(*trueInfoBank);
+
+	if (!output->fileOpened) {
+		output->hipoWriter->getDictionary().show();
+		output->hipoWriter->open(output->outFile.c_str());
+		output->fileOpened = true;
+	}
+
+	if (trueInfoBank != nullptr) { outEvent->addStructure(*trueInfoBank); }
 
 	output->hipoWriter->addEvent(*outEvent);
+	output->eventsWritten = true;
 }

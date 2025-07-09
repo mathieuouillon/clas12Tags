@@ -18,14 +18,6 @@
 #include "frequencySyncSignal.h"
 
 
-
-
- 
-
-
-
-
-
 // Hipo
 #include "hipo4/writer.h"
 #include "hipoSchemas.h"
@@ -44,16 +36,13 @@
 // TODO: all these quantities should be references.
 
 
-class userInforForParticle
-{
+class userInforForParticle {
 public:
 	vector<double> infos;
 };
 
-class hitOutput
-{
+class hitOutput {
 private:
-
 	// geant4 integrated (over the hit) information.
 	// DISABLED by default
 	// key is variable name
@@ -67,17 +56,17 @@ private:
 	// geant4 step by step information.
 	// DISABLED by default
 	// key is variable name
-	map< string, vector <double> > allRaws;
+	map<string, vector<double>> allRaws;
 
 	// multi - digitized information from step by step
 	// DISABLED by default
 	// key is variable name
-	map< string, vector <int> >  multiDgt;
+	map<string, vector<int>> multiDgt;
 
 	// quantized signal as a function of time bunch
 	// DISABLED by default
 	// the first three entries are crate/slot/channel
-	map< int, int >  quantumS;
+	map<int, int> quantumS;
 
 	// charge ([0]), time([1] info at every step
 	// DISABLED by default
@@ -87,45 +76,42 @@ private:
 	// index 3: time at electronics
 	// index 4: vector of identifiers - have to match the translation table
 	// index 5: hardware - it's a vector[3] with crate/slot/channel
-	map< int, vector <double> >  chargeTime;
+	map<int, vector<double>> chargeTime;
 
 public:
+	void setRaws(map<string, double> r) { raws = r; }
+	void setDgtz(map<string, double> d) { dgtz = d; }
+	void setAllRaws(map<string, vector<double>> r) { allRaws = r; }
+	void setMultiDgt(map<string, vector<int>> d) { multiDgt = d; }
+	void setChargeTime(map<int, vector<double>> d) { chargeTime = d; }
 
-	void setRaws       (map<string, double> r)            {raws = r;}
-	void setDgtz       (map<string, double> d)            {dgtz = d;}
-	void setAllRaws    (map< string, vector <double> > r) {allRaws  = r;}
-	void setMultiDgt   (map< string, vector <int> > d)    {multiDgt = d;}
-	void setChargeTime (map< int, vector <double> > d)    {chargeTime = d;}
+	void setOneRaw(string s, double d) { raws[s] = d; }
+	void setOneRaw(string s, int i) { raws[s] = (double)i; }
 
-	void setOneRaw    (string s, double d)              {raws[s] = d;}
-	void setOneRaw    (string s, int i)                 {raws[s] = (double) i;}
+	void setOneDgt(string s, double d) { dgtz[s] = d; }
+	void setOneDgt(string s, int i) { dgtz[s] = (double)i; }
 
-	void setOneDgt    (string s, double d)              {dgtz[s] = d;}
-	void setOneDgt    (string s, int i)                 {dgtz[s] = (double) i;}
-
-	void createQuantumS(map< int, int > qs) {quantumS = qs;}
+	void createQuantumS(map<int, int> qs) { quantumS = qs; }
 
 
 	// may want to insert verbosity here?
-	map<string, double>            getRaws()       {return raws;}
-	map<string, double>            getDgtz()       {return dgtz;}
-	map< string, vector <double> > getAllRaws()    {return allRaws;}
-	map< string, vector <int> >    getMultiDgt()   {return multiDgt;}
-	map< int, vector <double> >    getChargeTime() {return chargeTime;}
-	map< int, int >         	   getQuantumS()   {return quantumS;}
+	map<string, double>         getRaws() { return raws; }
+	map<string, double>         getDgtz() { return dgtz; }
+	map<string, vector<double>> getAllRaws() { return allRaws; }
+	map<string, vector<int>>    getMultiDgt() { return multiDgt; }
+	map<int, vector<double>>    getChargeTime() { return chargeTime; }
+	map<int, int>               getQuantumS() { return quantumS; }
 
-	double getIntRawVar(string s)
-	{
-		if(raws.find(s) != raws.end()) return raws[s];
+	double getIntRawVar(string s) {
+		if (raws.find(s) != raws.end()) return raws[s];
 		return -99;
 	}
-	double getIntDgtVar(string s)
-	{
-		if(dgtz.find(s) != dgtz.end()) return dgtz[s];
+
+	double getIntDgtVar(string s) {
+		if (dgtz.find(s) != dgtz.end()) return dgtz[s];
 		return -99;
 	}
 };
-
 
 
 /// \class summaryForParticle
@@ -137,18 +123,17 @@ public:
 /// - fastest time
 /// - nphe
 /// - detector name
-class summaryForParticle
-{
+class summaryForParticle {
 public:
-	summaryForParticle(string detector)
-	{
+	summaryForParticle(string detector) {
 		dname = detector;
 		stat  = 0;
 		etot  = 0;
-		t     = -1;  // initializing to negative for the first assignment
+		t     = -1; // initializing to negative for the first assignment
 		nphe  = 0;
 	}
-	~summaryForParticle(){;}
+
+	~summaryForParticle() { ; }
 
 	string dname;
 	int    stat;
@@ -165,15 +150,14 @@ public:
 /// by a primary particle
 /// - original track momentum
 /// - smeared track momentum
-class fastMCForParticle
-{
+class fastMCForParticle {
 public:
-	fastMCForParticle([[maybe_unused]] string detector)
-	{
-		pOrig  = G4ThreeVector(0,0,0);
-		pSmear = G4ThreeVector(0,0,0);
+	fastMCForParticle([[maybe_unused]] string detector) {
+		pOrig  = G4ThreeVector(0, 0, 0);
+		pSmear = G4ThreeVector(0, 0, 0);
 	}
-	~fastMCForParticle(){;}
+
+	~fastMCForParticle() { ; }
 
 	/// - stat (how many hits generated by this track)
 	G4ThreeVector pOrig;
@@ -182,32 +166,29 @@ public:
 };
 
 
-
-
 /// \class generatedParticle
 /// <b> generatedParticle </b>\n\n
 /// Contains particle informations.
 /// The Primary Particles will be written to the output.\n
 /// Secondary Particles will be written to the output if option is specified.\n
-class generatedParticle
-{
+class generatedParticle {
 public:
-	generatedParticle()
-	{
+	generatedParticle() {
 		pSum.clear();
 		fastMC.clear();
 	}
-	~generatedParticle(){;}
+
+	~generatedParticle() { ; }
 
 	G4ThreeVector vertex;
 	G4ThreeVector momentum;
-	int PID;
-	double time;
-	int multiplicity;
+	int           PID;
+	double        time;
+	int           multiplicity;
 
 	// adding summary information for each detector.
-	vector<summaryForParticle>   pSum;
-	vector<fastMCForParticle>    fastMC;
+	vector<summaryForParticle> pSum;
+	vector<fastMCForParticle>  fastMC;
 
 
 	int    getVariableFromStringI(string);
@@ -215,15 +196,17 @@ public:
 };
 
 
-class ancestorInfo
-{
+class ancestorInfo {
 public:
-	ancestorInfo() {};
-	~ancestorInfo() {};
-	int pid;
-	int tid;
-	int mtid;
-	double trackE;
+	ancestorInfo() {
+	};
+
+	~ancestorInfo() {
+	};
+	int           pid;
+	int           tid;
+	int           mtid;
+	double        trackE;
 	G4ThreeVector p;
 	G4ThreeVector vtx;
 
@@ -235,27 +218,28 @@ public:
 /// \class outputContainer
 /// <b> outputContainer </b>\n\n
 /// Contains all possible outputs.
-class outputContainer
-{
+class outputContainer {
 public:
 	outputContainer(goptions);
 	~outputContainer();
 
 	goptions gemcOpt;
-	string outType;
-	string outFile;
+	string   outType;
+	string   outFile;
 
-	ofstream        *txtoutput;
-	
+	ofstream* txtoutput;
+
 
 	// hipo schema and writer
 	// The schemas have to be added to the writer before openning
 	// the file, since they are written into the header of the file.
 	// Thus the schema has to be declared in this base class
-	void initializeHipo(bool openFile);
-	hipo::writer    *hipoWriter;
-	HipoSchema      *hipoSchema;
+	void          initializeHipo(bool openFile);
+	hipo::writer* hipoWriter;
+	HipoSchema*   hipoSchema;
 
+	bool fileOpened    = false; ///< true if the outputFactory is initialized
+	bool eventsWritten = false;
 };
 
 /// \class outputFactory
@@ -263,30 +247,28 @@ public:
 /// outputFactory is registered in a map<string, outputFactory>\n
 /// The virtual method processOutput is called at the end of each event.
 
-class outputFactory
-{
+class outputFactory {
 public:
-
-	// prepare event 
-	virtual void prepareEvent(outputContainer* output, map<string, double> *configuration) ;
+	// prepare event
+	virtual void prepareEvent(outputContainer* output, map<string, double>* configuration);
 
 	// record the simulation conditions on the file
 	virtual void recordSimConditions(outputContainer*, map<string, string>) = 0;
 
 	// write event header
-	virtual void writeHeader(outputContainer*, map<string, double>, gBank)  = 0;
+	virtual void writeHeader(outputContainer*, map<string, double>, gBank) = 0;
 
 	// write RF Signal
-	virtual void writeRFSignal(outputContainer*, FrequencySyncSignal, gBank)  = 0;
+	virtual void writeRFSignal(outputContainer*, FrequencySyncSignal, gBank) = 0;
 
 	// write user infos header
-	virtual void writeUserInfoseHeader(outputContainer*, map<string, double>)  = 0;
+	virtual void writeUserInfoseHeader(outputContainer*, map<string, double>) = 0;
 
 	// write generated particles
-	virtual void writeGenerated(outputContainer*, vector<generatedParticle>, map<string, gBank> *banksMap, vector<userInforForParticle> userInfo) = 0;
+	virtual void writeGenerated(outputContainer*, vector<generatedParticle>, map<string, gBank>* banksMap, vector<userInforForParticle> userInfo) = 0;
 
 	// write ancestors
-	virtual void writeAncestors (outputContainer*, vector<ancestorInfo>, gBank) = 0;
+	virtual void writeAncestors(outputContainer*, vector<ancestorInfo>, gBank) = 0;
 
 	// write geant4 true integrated info
 	virtual void writeG4RawIntegrated(outputContainer*, vector<hitOutput>, string, map<string, gBank>*) = 0;
@@ -306,7 +288,7 @@ public:
 	// write fadc mode 1 (full signal shape) - jlab hybrid banks. This uses the translation table to write the crate/slot/channel
 	// This method should be called once at the end of event action, and the 1st argument
 	// is a map<int crate_id, vector<hitoutput> (vector of all hits from that crate) >
-	virtual void writeFADCMode1( map<int, vector<hitOutput> >, int)  = 0;
+	virtual void writeFADCMode1(map<int, vector<hitOutput>>, int) = 0;
 
 	// write fadc mode 7 (integrated mode) - jlab hybrid banks. This uses the translation table to write the crate/slot/channel
 	virtual void writeFADCMode7(outputContainer*, vector<hitOutput>, int) = 0;
@@ -314,21 +296,17 @@ public:
 	// write event and close stream if necessary
 	virtual void writeEvent(outputContainer*) = 0;
 
-	string outputType;
-	virtual ~outputFactory(){;}
+	string  outputType;
+	virtual ~outputFactory() { ; }
 };
 
 // Define outputFactory as a pointer to a function that returns a pointer to a outputFactory
-typedef outputFactory *(*outputFactoryInMap)();
+typedef outputFactory*(*outputFactoryInMap)();
 
 // Instantiates the outputFactory
-outputFactory *getOutputFactory(map<string, outputFactoryInMap>*, string);
+outputFactory* getOutputFactory(map<string, outputFactoryInMap>*, string);
 
 map<string, outputFactoryInMap> registerOutputFactories();
-
-
-
-
 
 
 #endif

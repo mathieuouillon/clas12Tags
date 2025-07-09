@@ -23,6 +23,10 @@ expat_dep = dependency('expat', required : true)
 # pkg-config --cflags --libs zlib
 zlib_dep = dependency('zlib', static : false, required : true)  # Use shared libz.so instead of libz.a
 
+# pkg-config --cflags --libs liblz4
+# needed by hipo
+lz4_dep = dependency('liblz4', required: true)
+
 # sqlite
 sqlite_dep = dependency('sqlite3', required : true)
 

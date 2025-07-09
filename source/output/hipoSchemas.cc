@@ -292,6 +292,7 @@ void outputContainer::initializeHipo(bool openFile) {
 					  << ", row length = " << s.getRowLength() << "\n";
 		}
 
-		hipoWriter->open(outFile.c_str());
+		// hipoWriter->open(outFile.c_str());
+		// fileOpened = true;
 	}
 }
